@@ -10,7 +10,7 @@ const int HEIGHT         = 600;
 #ifdef COUNT_FPS
     int countity_of_calc = 0;
     unsigned long long sum_of_fps = 0;
-    const int base_number = 500000;
+    const int base_number = 5;
 #endif
 
 #ifdef COUNT_FPS

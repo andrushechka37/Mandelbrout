@@ -5,7 +5,6 @@
 
 const int MAX_ITERATIONS = 256;
 const __m128 RADIUS = _mm_set_ps1(100.f);
-
 const int WIDTH = 800;
 const int HEIGHT = 600;
 
@@ -48,7 +47,9 @@ inline void get_colour(__m128 X0, __m128 Y0, __m128& color) {
 
 
 inline void draw_vector(sf::Image* image, sf::Color pixel_array[600][800], int * color_int, int x0, int y0) {
+
     for (int i = 0; i < 4; i++) {
+
         sf::Color sfColor((color_int[i] * 6) % 256, 0, (color_int[i] * 10) % 256);
         (*image).setPixel(x0 + i, y0, sfColor);
     }
@@ -62,7 +63,8 @@ void calculate_fps(unsigned long long start, unsigned long long end) {
     sum_of_fps += dif;
 
     if (countity_of_calc == base_number) {
-        printf("average fps for %d times: %llu\n\n", base_number, sum_of_fps/base_number);
+
+        printf("average ticks for %d times: %llu\n\n", base_number, sum_of_fps/base_number);
         sum_of_fps = 0;
         countity_of_calc = 0;
     }
@@ -140,3 +142,10 @@ int main() {
 
     return 0;
 }
+
+
+// TODO: понять норм ли посчитано
+        // расчитать 03 и без
+        // сделать так чтоб 03 не выбрасывало
+        // &&&&&&&&&&&&&&&&&&&&&&
+        // мб сдвиги и scale
