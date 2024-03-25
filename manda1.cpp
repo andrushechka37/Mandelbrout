@@ -5,6 +5,29 @@ const float RADIUS       = 10.0f;
 const int WIDTH          = 800;
 const int HEIGHT         = 600;
 
+#define COUNT_FPS
+
+#ifdef COUNT_FPS
+    int countity_of_calc = 0;
+    unsigned long long sum_of_fps = 0;
+    const int base_number = 500000;
+#endif
+
+#ifdef COUNT_FPS
+void calculate_fps(unsigned long long start, unsigned long long end) {
+
+    countity_of_calc++;
+    unsigned long long dif = end - start;
+    sum_of_fps += dif;
+
+    if (countity_of_calc == base_number) {
+        printf("average fps for %d times: %llu\n\n", base_number, sum_of_fps/base_number);
+        sum_of_fps = 0;
+        countity_of_calc = 0;
+    }
+}
+#endif
+
 
 int get_colour(float x0, float y0) {
 
@@ -27,10 +50,8 @@ int get_colour(float x0, float y0) {
     }
 
     if (i == N_MAX) {
-
         return 0;       
     } else {
-
         return i;
     }
 }
@@ -38,21 +59,14 @@ int get_colour(float x0, float y0) {
 int main() {
 
 
-    sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Mandelbrot Set");
-    sf::Image image;
-    image.create(WIDTH, HEIGHT, sf::Color::Black);
-    sf::Texture texture;
-    texture.create(WIDTH, HEIGHT);
-    sf::Sprite sprite(texture);
-    sf::Font font;
-    sf::Text fpsText("", font, 20);
-    fpsText.setColor(sf::Color::White);
-    fpsText.setPosition(10, 10);
+    sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Mandelbrot Set"); // make window
 
-    sf::Clock gameClock; // Переименовано из clock в gameClock
-    int frames = 0;
-    int n_of_frames = 0;
-    float fps_sum = 0;
+    sf::Image image;                                // картинка на которой пикселями рисуем
+    image.create(WIDTH, HEIGHT, sf::Color::Black);  //
+
+    sf::Texture texture;                //
+    texture.create(WIDTH, HEIGHT);      // smth
+    sf::Sprite sprite(texture);         //
 
     while (window.isOpen()) {
         sf::Event event;
@@ -63,6 +77,12 @@ int main() {
 
 // ---------------------------------------------------------------------
 
+
+        #ifdef COUNT_FPS
+            unsigned long long start = __rdtsc();
+        #endif
+
+
         for (int y = 0; y < HEIGHT; ++y) {
             for (int x = 0; x < WIDTH; ++x) {
 
@@ -70,10 +90,18 @@ int main() {
                 float yy = (float)y / HEIGHT * 2.0f - 1.0f;
 
                 int color = get_colour(xx, yy);
-                sf::Color sfColor((color * 6) % 256, 0, (color * 10) % 256);
-                image.setPixel(x, y, sfColor);
+
+                #ifndef COUNT_FPS
+                    sf::Color sfColor((color * 6) % 256, 0, (color * 10) % 256);
+                    image.setPixel(x, y, sfColor);
+                #endif
             }
         }
+
+        #ifdef COUNT_FPS
+            unsigned long long end = __rdtsc();
+            calculate_fps(start, end);
+        #endif
 
 // ---------------------------------------------------------------------
 
@@ -81,24 +109,6 @@ int main() {
 
         window.clear();
         window.draw(sprite);
-
-        frames++;
-        n_of_frames++;
-
-        if (gameClock.getElapsedTime().asSeconds() >= 1.0) {
-            float fps = frames / gameClock.getElapsedTime().asSeconds();
-
-            fps_sum += fps;
-            if (n_of_frames == 10) {
-                printf("average fps is: %f\n", fps_sum / 10);
-                gameClock.restart();
-                fps_sum = 0;
-                n_of_frames = 0;
-            }
-
-            gameClock.restart();
-            frames = 0;
-        }
         window.display();
     }
 
