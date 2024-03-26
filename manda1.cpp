@@ -14,14 +14,14 @@ const int HEIGHT         = 600;
 #endif
 
 #ifdef COUNT_FPS
-void calculate_fps(unsigned long long start, unsigned long long end) {
+inline void calculate_fps(unsigned long long start, unsigned long long end) {
 
     countity_of_calc++;
     unsigned long long dif = end - start;
     sum_of_fps += dif;
 
     if (countity_of_calc == base_number) {
-        printf("average fps for %d times: %llu\n\n", base_number, sum_of_fps/base_number);
+        printf("average ticks for %d times: %llu\n\n", base_number, sum_of_fps/base_number);
         sum_of_fps = 0;
         countity_of_calc = 0;
     }
@@ -29,7 +29,7 @@ void calculate_fps(unsigned long long start, unsigned long long end) {
 #endif
 
 
-int get_colour(float x0, float y0) {
+inline int get_colour(float x0, float y0) {
 
     float x  = 0.0f;
     float y  = 0.0f;
@@ -89,7 +89,7 @@ int main() {
                 float xx = (float)x / WIDTH * 3.5f - 2.5f;
                 float yy = (float)y / HEIGHT * 2.0f - 1.0f;
 
-                int color = get_colour(xx, yy);
+                volatile int color = get_colour(xx, yy);
 
                 #ifndef COUNT_FPS
                     sf::Color sfColor((color * 6) % 256, 0, (color * 10) % 256);

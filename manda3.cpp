@@ -16,7 +16,7 @@ const int HEIGHT = 600;
     const int base_number = 5;
 #endif
 
-inline void get_colour(__m128 X0, __m128 Y0, __m128& color) {
+inline void get_colour(__m128 X0, __m128 Y0, volatile  __m128& color) {
 
     __m128 X =  _mm_set_ps1(0); // X = {0, 0, 0, 0}
     __m128 Y =  _mm_set_ps1(0); // Y = {0, 0, 0, 0}
@@ -89,7 +89,7 @@ inline void mandelbrot(sf::Image* image, sf::Color pixel_array[600][800]){
             __m128 Y = _mm_set_ps1((float)y0 / HEIGHT * 2.0f - 1.0f);
 
 
-            __m128 color =  _mm_setzero_si128();
+            volatile __m128 color =  _mm_setzero_si128();
 
             get_colour(X, Y, color);
 
@@ -130,7 +130,6 @@ int main() {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-
 
         mandelbrot(&image, pixel_array);
 
