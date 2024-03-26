@@ -132,3 +132,4 @@ int main() {
 
 
 // массив клок функции 
+// clang++ manda.cpp -O3 -o manda -lsfml-graphics -lsfml-window -lsfml-system
