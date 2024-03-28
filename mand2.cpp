@@ -17,6 +17,7 @@ const int LEN_OF_VECTOR = 4;
 #endif
 
 #ifdef COUNT_FPS
+
 inline void calculate_fps(unsigned long long start, unsigned long long end) {
 
     countity_of_calc++;

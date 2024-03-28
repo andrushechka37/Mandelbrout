@@ -61,12 +61,12 @@ int main() {
 
     sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Mandelbrot Set"); // make window
 
-    sf::Image image;                                // картинка на которой пикселями рисуем
+    sf::Image image;                                                     // картинка на которой пикселями рисуем
     image.create(WIDTH, HEIGHT, sf::Color::Black);  //
 
-    sf::Texture texture;                //
+    sf::Texture texture;                              //
     texture.create(WIDTH, HEIGHT);      // smth
-    sf::Sprite sprite(texture);         //
+    sf::Sprite sprite(texture);                       //
 
     while (window.isOpen()) {
         sf::Event event;
