@@ -88,6 +88,13 @@ H/W path        Device     Class          Description
 /3              input3     input          VirtualPS/2 VMware VMMouse
 /4              input4     input          VirtualPS/2 VMware VMMouse
 ```
+* Компиллятор:
+```
+Ubuntu clang version 14.0.0-1ubuntu1.1
+Target: x86_64-pc-linux-gnu
+Thread model: posix
+InstalledDir: /usr/bin
+```
 # `2 Экспериментальная установка`:
 ## Удаленный сервер
 ![1](/images/1.png)
